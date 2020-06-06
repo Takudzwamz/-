@@ -1,0 +1,42 @@
+﻿@*здесь нельзя давать интерфейс IEntityBase инче <label asp-for="Name"... не достанет атрибут свойства *@
+@model Mark
+
+@{
+    ViewData["Title"] = "Поставить оценку";
+    //string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetName() ?? Model.GetType().Name;
+    //string Description = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetDescription() ?? Model.GetType().Name;
+    //var ScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.GetType(), "Name")?.DisplayValue ?? true;
+}
+
+<h1>Изменить оценку</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="StatementId" />
+            <input type="hidden" asp-for="StudentId" />
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Student)
+                <div class="editor-field">
+                    <label>@Model.Student?.Name</label>
+                </div>
+            </div>
+
+
+            @Html.EditorFor(x => x.MarkValueId)
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@{ 
+    string hrf = "/Statement/Edit/" + @Model.StatementId;
+}
+<div>
+    <a href="@hrf">Вернуться к ведомости</a>
+</div>

@@ -1,0 +1,12 @@
+﻿@model string
+@{
+    var PropertyName = ViewData.ModelExplorer.Metadata.PropertyName;
+}
+@Html.Editor(PropertyName, null , PropertyName)
+
+    <div class="form-group">
+        <label for="@PropertyName" class="control-label"></label>
+        <input for="@PropertyName" class="form-control" value="@Model" />
+        <span validation-for="@PropertyName" class="text-danger"></span>
+
+    </div>

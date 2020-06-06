@@ -1,0 +1,47 @@
+﻿@*здесь нельзя давать интерфейс IEntityBase инче <label asp-for="Name"... не достанет атрибут свойства *@
+@model EntityBase
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.AspNetCore.Mvc
+@using Faculty.Utils
+@using System.ComponentModel.DataAnnotations
+@using System.ComponentModel
+@{
+    ViewData["Title"] = "Редактировать";
+    string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetName() ?? Model.GetType().Name;
+    string Description = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetDescription() ?? Model.GetType().Name;
+    var ScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.GetType(), "Name")?.DisplayValue ?? true;
+}
+
+<h1>Редактировать</h1>
+
+<h4>@Description</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            @if (ScaffoldName)
+            {
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            }
+
+            @Html.EditorForModel()
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Вернуться к списку</a>
+</div>
+

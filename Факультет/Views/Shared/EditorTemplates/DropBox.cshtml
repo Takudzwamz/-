@@ -1,0 +1,6 @@
+﻿@model int?
+@{
+    var PropertyName = ViewData.ModelExplorer.Metadata.PropertyName;
+    int i = 1;
+}
+<div>@await Component.InvokeAsync("DropBox",new { PropertyName, SelectedId = Model })</div>

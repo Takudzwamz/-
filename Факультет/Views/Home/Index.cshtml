@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Добро пожаловать</h1>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+</div>
+
+@if (false)
+{
+<div class="container">
+    <form>
+        <div class="form-group">
+            <input type="hidden" id="AutoSearchValue">
+            <label class="seachInline" for="AutoSearch">
+                Поиск1:
+            </label>
+            <input type="search" id="AutoSearch" class="form-control" placeholder="Введите более 2 букв для поиска">
+
+        </div>
+    </form>
+</div>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <input type="hidden" id="AutoSearchValue1">
+            <label class="seachInline" for="AutoSearch1">
+                Поиск1:
+            </label>
+            <input type="search" id="AutoSearch1" class="form-control" placeholder="Введите более 2 букв для поиска !!!">
+
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        versh.InitAutocomplete("#AutoSearch", "#AutoSearchValue", "/Autocomplete/AutocompleteData", "Student");
+        versh.InitAutocomplete("#AutoSearch1", "#AutoSearchValue1", "/Autocomplete/AutocompleteData", "Emploee");
+    });
+</script>
+}

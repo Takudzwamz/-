@@ -1,0 +1,177 @@
+﻿@model IEnumerable<IEntityBase>
+@using Faculty.Utils
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata
+@using System.ComponentModel.DataAnnotations
+@{
+    //ViewData["Title"] = "Виды обучения";
+    Type t = Model.GetType();
+    var gaType = t.GetGenericArguments()[0];
+    //ModelMetadata mm = ViewData.CollectionModelMetadata(gaType);
+    ModelMetadata mm = Html.MetadataProvider.GetMetadataForType(gaType);
+
+    string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(gaType)?.GetName() ?? gaType.Name;
+
+
+    var pmd = mm.GetMetadataForProperties(gaType);
+    string s = "";
+}
+@functions {
+    // получить упорядоченное по Order атрибута DisplayAttribute перечисление свойств, если не задан Order, то будет как 0
+    IOrderedEnumerable<ModelMetadata> OrderedProperties(ModelMetadata mm)
+    {
+        return mm.Properties.OrderBy(x =>
+            ((DisplayAttribute)((DefaultModelMetadata)x).Attributes.PropertyAttributes?
+                .Where(a => a is DisplayAttribute).FirstOrDefault())?.GetOrder());
+
+    }
+    SortedDictionary<int, object> OrderedPropertyValues(ModelMetadata mm, IEntityBase entity)
+    {
+        var sd = new SortedDictionary<int, object>();
+        int i = 0;
+        foreach (var prop in OrderedProperties(mm))
+        {
+            object ShowInList = GetAttributeProperty<Faculty.Models.MetadataAttribute>(prop, "ShowInList");
+            object DisplayName = GetAttributeProperty<DisplayAttribute>(prop, "Name") ?? prop.Name;
+
+            if (ShowInList == null || (bool)ShowInList)
+            {
+                var v = entity.GetType().GetProperty(prop.Name)?.GetValue(entity);
+                i++;
+                sd.Add(i, v);
+            }
+        }
+        return sd;
+    }
+
+    object GetAttributeProperty<Tattr>(ModelMetadata m, string propName) // для свойств метаданных
+    {
+        object res = ((DefaultModelMetadata)m).Attributes.PropertyAttributes.Where(a => a is Tattr).FirstOrDefault();
+        if (res != null)
+        {
+            return res.GetType().GetProperty(propName)?.GetValue(res);
+        }
+        return null;
+    }
+
+}
+
+@*<input type="hidden" id="IdRowSelected">
+<h1>@DisplayName</h1>
+@if (!(gaType == typeof(Faculty.Models.Mark)))
+{
+    <p>
+        <a asp-action="Create">Создать новый</a>
+    </p>
+}*@
+
+<table class="table table-striped table-fixed">
+    <thead class="thead-light">
+        <tr>
+            @foreach (var item in OrderedProperties(mm))
+            {
+                object ShowInList = GetAttributeProperty<Faculty.Models.MetadataAttribute>(item, "ShowInList");
+                object DisplayName1 = GetAttributeProperty<DisplayAttribute>(item, "Name") ?? item.Name;
+
+                @if (ShowInList == null || (bool)ShowInList)
+                {
+                    <th>
+                        @DisplayName1
+                    </th>
+                }
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{
+                    var dd = OrderedPropertyValues(mm, item);
+                }
+                @foreach (var kv in dd)
+                {
+                    if (kv.Value != null)
+                    {
+                        if (kv.Value.GetType() == typeof(System.DateTime))
+                        {
+                            <td>@( ((System.DateTime)kv.Value).ToString("dd.MM.yyyy", System.Globalization .DateTimeFormatInfo.InvariantInfo))</td>
+                        }
+                        else if (kv.Value.GetType() == typeof(System.Boolean))
+                        {
+                            if ((bool)kv.Value)
+                            {
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td><img src="/failure.png" width="50" height="50" alt="Отчислен"></td>
+                            }
+                        }
+                        else
+                        {
+                            <td>@(kv.Value?.ToString() ?? "")</td>
+                        }
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                }
+            <td>
+
+                @if ((item is Faculty.Models.Mark))
+                {
+                    var m = (Faculty.Models.Mark)item;
+                    string hrf;
+                    if (m.Id == 0)
+                    {
+                        hrf = $"/Marks/Create/{m.StatementId.ToString()}/{m.StudentId.ToString()}";
+                        <div>
+                            <a href="@hrf">Оценить</a>
+                        </div>
+                    }
+                    else
+                    {
+                        hrf = $"/Marks/Edit/{m.Id}";
+                        <div>
+                            <a href="@hrf">Изменить</a>
+                        </div>
+                    }
+
+                }
+                else if ((item is Faculty.Models.Statement))
+                {
+                    <a asp-action="Edit" asp-controller="@gaType.Name" asp-route-id="@item.Id">Оценки</a>
+                    <text>|</text>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                }
+                else
+                {
+                    <a asp-action="Edit" asp-controller="@gaType.Name" asp-route-id="@item.Id">Изменить</a>
+                    <text>|</text>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    if ((item is Faculty.Models.Persion))
+                    {
+                        <text>|</text>
+                        var st = (Faculty.Models.Persion)item;
+                        if (st.AccountId == null)
+                        {
+                            if (item.GetType().BaseType == typeof(Student) && ((Student)item).IsActive)
+                            {
+                                <a asp-area="Identity" asp-page="/Account/Register" asp-route-persontype="@item.GetType().BaseType.Name" asp-route-personid="@item.Id" asp-route-personname="@item.Name">Регистрировать</a>
+                            }
+                            else if (item.GetType().BaseType == typeof(Employee))
+                            {
+                                <a asp-area="Identity" asp-page="/Account/Register" asp-route-persontype="@item.GetType().BaseType.Name" asp-route-personid="@item.Id" asp-route-personname="@item.Name">Регистрировать</a>
+                            }
+                        }
+                    }
+                }
+
+            </td>
+            </tr>
+        }
+    </tbody>
+</table>

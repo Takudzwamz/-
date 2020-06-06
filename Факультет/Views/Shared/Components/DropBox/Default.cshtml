@@ -1,0 +1,8 @@
+﻿@model IEnumerable<SelectListItem>
+
+@{
+    ViewData["Title"] = "Default";
+}
+
+@Html.DropDownList("", Model, "Выберите значение", new { @class = "form-control" })
+@Html.ValidationMessageFor(model => model)

@@ -1,0 +1,44 @@
+﻿@model Faculty.Models.Mark
+@using Faculty.Utils
+@using System.ComponentModel.DataAnnotations
+
+@{
+    ViewData["Title"] = "Delete";
+    string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetName() ?? Model.GetType().Name;
+
+}
+
+<h1>Удалить</h1>
+
+<h3>Вы действительно хотите удалить выставленную оценку?</h3>
+<div>
+    <h4>Выставленная оценка</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить оценку" class="btn btn-danger" />
+        @{
+            string hrf = "/Statement/Edit/" + @Model.StatementId;
+        }
+        <div>
+            <a href="@hrf">Вернуться к ведомости</a>
+        </div>
+    </form>
+    <br>
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <strong>Error!</strong> @ViewBag.Message
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    }
+</div>

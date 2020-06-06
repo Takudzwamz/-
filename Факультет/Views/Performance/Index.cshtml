@@ -1,0 +1,48 @@
+﻿@model PerformanceViewModel
+
+@{
+    ViewData["Title"] = "Успеваемость";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ФАКУЛЬТЕТ</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <h1>Успеваемость</h1>
+
+    @if (Model.ListLines.Count() == 0)
+    {
+        <h3>Нет данных успеваемости или Вы не студент!</h3>
+    }
+    else
+    {
+        <h3>для студента @Model.StudentName</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Дисциплина</th>
+                    <th>Оценка</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.ListLines)
+                {
+                    <tr>
+                        <td>@p.Subject</td>
+                        <td>@p.Mark</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+</body>
+</html>

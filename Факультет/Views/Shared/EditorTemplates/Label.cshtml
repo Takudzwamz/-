@@ -1,0 +1,9 @@
+﻿@model string
+@{
+    var PropertyName = ViewData.ModelExplorer.Metadata.PropertyName;
+}
+<div class="form-group">
+    <div class="editor-field">
+        <label class="form-control">@Model</label>
+    </div>
+</div>

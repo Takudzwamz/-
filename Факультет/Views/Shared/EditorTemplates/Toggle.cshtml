@@ -1,0 +1,11 @@
+﻿@model bool
+@{
+    var PropertyName = ViewData.ModelExplorer.Metadata.PropertyName;
+    var v = Model.ToString().ToLower();
+    string c = Model ? "checked" : "";
+}
+
+
+<input type="checkbox" @c value="true" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="Учится" data-off="Отчислен"
+       id="@PropertyName" name="@PropertyName">
+

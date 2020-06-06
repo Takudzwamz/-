@@ -1,0 +1,61 @@
+﻿@*здесь нельзя давать интерфейс IEntityBase инче <label asp-for="Name"... не достанет атрибут свойства *@
+@model StatementViewModel
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata
+@using Faculty.Models
+@using Microsoft.AspNetCore.Mvc
+@using Faculty.Utils
+@using System.ComponentModel.DataAnnotations
+@using System.ComponentModel
+@{
+    ViewData["Title"] = "Редактировать ведомость";
+    string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model.Statement.GetType())?.GetName() ?? Model.GetType().Name;
+    string Description = Html.GetTypeAttribute<DisplayAttribute>(Model.Statement.GetType())?.GetDescription() ?? Model.GetType().Name;
+    var ScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.Statement.GetType(), "Name")?.DisplayValue ?? true;
+}
+
+<h1>Ведомость</h1>
+<hr />
+<div id="disabled-block">
+    @*<partial name="Edit" model='Model.Statement' />*@
+    @Html.EditorFor(m => m.Statement)
+
+</div>
+<div>
+    <a asp-action="Index">Вернуться к списку ведомостей</a>
+</div>
+<hr />
+@*<div class="row">
+        <div class="col-md-12">
+            <form asp-action="Edit" asp-controller="Statement">
+                @Html.EditorFor(m => m.Statement)
+
+
+
+                <br>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+            </form>
+            <partial name="Index" for="Marks" />
+        </div>
+    </div>*@
+<partial name="IndexPartial"  for="Marks" />
+
+<script type="text/javascript">
+    // закрываем редактирование шапки в созданной ведомости
+    // для всех вложенных элементов рекурсивно
+    toggleDisabled(document.getElementById("disabled-block"));
+    function toggleDisabled(el) {
+        try {
+            el.disabled = el.disabled ? false : true;
+        }
+        catch (E) {
+        }
+        if (el.childNodes && el.childNodes.length > 0) {
+            for (var x = 0; x < el.childNodes.length; x++) {
+                toggleDisabled(el.childNodes[x]);
+            }
+        }
+    }
+</script>

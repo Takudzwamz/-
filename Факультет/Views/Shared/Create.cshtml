@@ -1,0 +1,70 @@
+﻿@*здесь нельзя давать интерфейс IEntityBase инче <label asp-for="Name"... не достанет атрибут свойства *@
+@model EntityBase
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Faculty.Utils
+@using System.ComponentModel.DataAnnotations
+@using System.ComponentModel
+@{
+    ViewData["Title"] = "Новая запись";
+    //Type t = Model.GetType();
+    //ModelMetadata mm = ViewData.CollectionModelMetadata(t);
+    //var ta = ((DefaultModelMetadata)mm).Attributes.TypeAttributes;
+    //string DisplayNameAttr = ((DisplayAttribute)ta.Where(x => x.GetType() == typeof(DisplayAttribute)).FirstOrDefault())?.GetName() ?? mm.ModelType.Name;
+
+
+    //var description = Model.GetModelAttribute<DescriptionAttribute>()?.Description;
+    //var DisplayName = Model.GetModelAttribute<DisplayAttribute>()?.Name;
+
+    //
+    string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetName() ?? Model.GetType().Name;
+    string Description = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetDescription() ?? Model.GetType().Name;
+    var ToScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.GetType(), "Name")?.DisplayValue ?? true;
+}
+
+<h1>Новая запись</h1>
+
+<h4>@Description</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" id="create-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (ToScaffoldName)
+            {
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            }
+
+            @Html.EditorForModel()
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Вернуться к списку</a>
+</div>
+@*при создании новой ведомости преподаватель фиксирован*@
+@if (Model.GetType() == typeof(Faculty.Models.Statement)) 
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // befor submitting form remove disabled attribute, otherwise the field is not dubmetted
+            $('#create-form').submit(function () {
+                document.getElementById("EmployeeId").removeAttribute("disabled", "disabled");
+                return true; // return false to cancel form action
+            });
+            // disable for user not chage
+            document.getElementById("EmployeeId").setAttribute("disabled", "disabled");
+        });
+    </script>
+}

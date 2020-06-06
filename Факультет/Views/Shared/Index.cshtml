@@ -1,0 +1,59 @@
+﻿@model System.Type
+@using Faculty.Utils
+@using System.ComponentModel.DataAnnotations
+@{
+    string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model)?.GetName() ?? Model.Name;
+
+}
+<h1>@DisplayName</h1>
+@if (!(Model == typeof(Faculty.Models.Mark)))
+{
+    <p>
+        <a asp-action="Create">Создать новый</a>
+    </p>
+}
+
+@if (Model.Name == "Student")
+{
+    var pattern = TempData.Peek("filter") ?? ""; 
+
+    @*<form class="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2">*@
+    <div class="form-inline">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input class="form-control form-control-sm ml-1 w-25" type="text" placeholder="Поиск" id="seach-pattern"
+               aria-label="Search"  value="@pattern">
+    </div>
+    <br>
+    @*</form>*@
+}
+<div id="ItemsTable"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#seach-pattern").on("input", function () {
+            // Get the input box
+            let input = document.getElementById('seach-pattern');
+            // Init a timeout variable to be used below
+            let timeout = null;
+            // Listen for keystroke events
+            input.addEventListener('keyup', function (e) {
+                // Clear the timeout if it has already been set.
+                // This will prevent the previous task from executing
+                // if it has been less than <MILLISECONDS>
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 1000ms (1 second)
+                timeout = setTimeout(function () {
+                    var pattern = $("#seach-pattern").val();
+                   // alert("1=" + pattern);
+                    $("#ItemsTable").load("@Model.Name/GetPartial/" + pattern);
+                }, 1000);
+            });
+
+
+        });
+        var pattern = $("#seach-pattern").val() || "";
+        //alert("2=" + pattern);
+        $("#ItemsTable").load("@Model.Name/GetPartial/" + pattern);
+    });
+</script>

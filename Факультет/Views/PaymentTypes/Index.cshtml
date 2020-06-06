@@ -1,0 +1,129 @@
+﻿@model IEnumerable<IEntityBase>
+@using Faculty.Utils
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata
+@using System.ComponentModel.DataAnnotations
+@{
+    ViewData["Title"] = "Виды обучения";
+    Type t = Model.GetType();
+    var gaType = t.GetGenericArguments()[0];
+    ModelMetadata mm = ViewData.CollectionModelMetadata(gaType);
+    var ta = ((DefaultModelMetadata)mm).Attributes.TypeAttributes;
+    string name = ((DisplayAttribute)ta.Where(x => x.GetType() == typeof(DisplayAttribute)).FirstOrDefault())?.Name ?? mm.ModelType.Name;
+
+
+    var pmd = mm.GetMetadataForProperties(gaType);
+    string s = "";
+}
+@functions {
+    // получить упорядоченное по Order атрибута DisplayAttribute перечисление свойств, если не задан Order, то будет как 0
+    IOrderedEnumerable<ModelMetadata> OrderedProperties(ModelMetadata mm)
+    {
+        return mm.Properties.OrderBy(x =>
+            ((DisplayAttribute)((DefaultModelMetadata)x).Attributes.PropertyAttributes?
+                .Where(a => a is DisplayAttribute).FirstOrDefault())?.Order);
+
+    }
+    SortedDictionary<int, object> OrderedPropertyValues(ModelMetadata mm, IEntityBase entity)
+    {
+        var sd = new SortedDictionary<int, object>();
+        int i = 0;
+        foreach (var prop in OrderedProperties(mm))
+        {
+            object ShowInList = GetAttributeProperty<Faculty.Models.MetadataAttribute>(prop, "ShowInList");
+            object DisplayName = GetAttributeProperty<DisplayAttribute>(prop, "Name") ?? prop.Name;
+
+            if (ShowInList == null || (bool)ShowInList)
+            {
+                var v = entity.GetType().GetProperty(prop.Name)?.GetValue(entity);
+                i++;
+                sd.Add(i, v);
+            }
+        }
+        return sd;
+    }
+
+    object GetAttributeProperty<Tattr>(ModelMetadata m, string propName) // для свойств метаданных
+    {
+        object res = ((DefaultModelMetadata)m).Attributes.PropertyAttributes.Where(a => a is Tattr).FirstOrDefault();
+        if (res != null)
+        {
+            return res.GetType().GetProperty(propName)?.GetValue(res);
+        }
+        return null;
+    }
+
+}
+
+<input type="hidden" id="IdRowSelected">
+
+<h1>@name</h1>
+@foreach (var item in OrderedProperties(mm))
+{
+    object ShowInList = GetAttributeProperty<Faculty.Models.MetadataAttribute>(item, "ShowInList");
+    object DisplayName = GetAttributeProperty<DisplayAttribute>(item, "Name") ?? item.Name;
+
+    @if (ShowInList == null || (bool)ShowInList)
+    {
+        <tr>
+            <td>
+                @DisplayName
+            </td>
+        </tr>
+    }
+}
+
+
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>*@
+
+            @foreach (var item in OrderedProperties(mm))
+            {
+                object ShowInList = GetAttributeProperty<Faculty.Models.MetadataAttribute>(item, "ShowInList");
+                object DisplayName = GetAttributeProperty<DisplayAttribute>(item, "Name") ?? item.Name;
+
+                @if (ShowInList == null || (bool)ShowInList)
+                {
+                    <th>
+                        @DisplayName
+                    </th>
+                }
+            }
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>*@
+
+                @{
+                    var dd = OrderedPropertyValues(mm, item);
+                }
+                @foreach (var kv in dd)
+                {
+                    <td>@(kv.Value?.ToString() ?? "")</td>
+                }
+
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
