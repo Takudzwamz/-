@@ -28,7 +28,12 @@ a {
 -------------------------------------------------- */
 html {
     font-size: 14px;
+    
 }
+body {
+    background-color: blue;
+}
+
 
 @media (min-width: 768px) {
     html {
@@ -136,3 +141,87 @@ h1 {
         float: left;
         position: relative;
     }*/
+
+/*==================
+ ABOUT SECTION
+====================*/
+
+#mu-about-us {
+    display: inline;
+    float: left;
+    width: 100%;
+    padding: 100px 0;
+    .mu-about-us-area
+
+{
+    display: inline;
+    float: left;
+    width: 100%;
+    .mu-about-us-left
+
+{
+    display: inline;
+    float: left;
+    width: 100%;
+    h2
+
+{
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+p {
+}
+
+ul {
+    margin-left: 25px;
+    margin-bottom: 15px;
+    li
+
+{
+    line-height: 30px;
+    list-style: circle;
+}
+
+}
+}
+
+.mu-about-us-right {
+    display: inline;
+    float: left;
+    width: 100%;
+    display: block;
+    width: 100%;
+    background-color: #ccc;
+    a
+
+{
+    display: block;
+    width: 100%;
+    position: relative;
+    img
+
+{
+    width: 100%;
+}
+
+&:after {
+    background-color: rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    color: #ddd;
+    content: '\f04b';
+    font-family: fontAwesome;
+    font-size: 50px;
+    left: 0;
+    padding-top: 27%;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+}
+
+}
+}
+}
+}

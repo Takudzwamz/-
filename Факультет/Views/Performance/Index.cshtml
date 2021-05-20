@@ -1,7 +1,7 @@
 ﻿@model PerformanceViewModel
 
 @{
-    ViewData["Title"] = "Успеваемость";
+    ViewData["Title"] = "Performance";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -9,27 +9,27 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ФАКУЛЬТЕТ</title>
+    <title>@ViewData["Title"] - Faculty</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
 
-    <h1>Успеваемость</h1>
+    <h1>Perfomance</h1>
 
     @if (Model.ListLines.Count() == 0)
     {
-        <h3>Нет данных успеваемости или Вы не студент!</h3>
+        <h3>Ho perfomance data or your are not a student!</h3>
     }
     else
     {
-        <h3>для студента @Model.StudentName</h3>
+        <h3>For Student @Model.StudentName</h3>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Дисциплина</th>
-                    <th>Оценка</th>
+                    <th>Course</th>
+                    <th>Mark</th>
                 </tr>
             </thead>
             <tbody>

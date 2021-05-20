@@ -129,29 +129,29 @@
                     {
                         hrf = $"/Marks/Create/{m.StatementId.ToString()}/{m.StudentId.ToString()}";
                         <div>
-                            <a href="@hrf">Оценить</a>
+                            <a href="@hrf">Grade</a>
                         </div>
                     }
                     else
                     {
                         hrf = $"/Marks/Edit/{m.Id}";
                         <div>
-                            <a href="@hrf">Изменить</a>
+                            <a href="@hrf">Change</a>
                         </div>
                     }
 
                 }
                 else if ((item is Faculty.Models.Statement))
                 {
-                    <a asp-action="Edit" asp-controller="@gaType.Name" asp-route-id="@item.Id">Оценки</a>
+                    <a asp-action="Edit" asp-controller="@gaType.Name" asp-route-id="@item.Id">Grades</a>
                     <text>|</text>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 }
                 else
                 {
-                    <a asp-action="Edit" asp-controller="@gaType.Name" asp-route-id="@item.Id">Изменить</a>
+                    <a asp-action="Edit" asp-controller="@gaType.Name" asp-route-id="@item.Id">Change</a>
                     <text>|</text>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     if ((item is Faculty.Models.Persion))
                     {
                         <text>|</text>
@@ -160,11 +160,11 @@
                         {
                             if (item.GetType().BaseType == typeof(Student) && ((Student)item).IsActive)
                             {
-                                <a asp-area="Identity" asp-page="/Account/Register" asp-route-persontype="@item.GetType().BaseType.Name" asp-route-personid="@item.Id" asp-route-personname="@item.Name">Регистрировать</a>
+                                <a asp-area="Identity" asp-page="/Account/Register" asp-route-persontype="@item.GetType().BaseType.Name" asp-route-personid="@item.Id" asp-route-personname="@item.Name">Register</a>
                             }
                             else if (item.GetType().BaseType == typeof(Employee))
                             {
-                                <a asp-area="Identity" asp-page="/Account/Register" asp-route-persontype="@item.GetType().BaseType.Name" asp-route-personid="@item.Id" asp-route-personname="@item.Name">Регистрировать</a>
+                                <a asp-area="Identity" asp-page="/Account/Register" asp-route-persontype="@item.GetType().BaseType.Name" asp-route-personid="@item.Id" asp-route-personname="@item.Name">Register</a>
                             }
                         }
                     }

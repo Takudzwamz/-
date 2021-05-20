@@ -2,13 +2,13 @@
 @model Mark
 
 @{
-    ViewData["Title"] = "Поставить оценку";
+    ViewData["Title"] = "Give marks";
     //string DisplayName = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetName() ?? Model.GetType().Name;
     //string Description = Html.GetTypeAttribute<DisplayAttribute>(Model.GetType())?.GetDescription() ?? Model.GetType().Name;
     //var ScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.GetType(), "Name")?.DisplayValue ?? true;
 }
 
-<h1>Изменить оценку</h1>
+<h1>Change Mark</h1>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -29,7 +29,7 @@
             @Html.EditorFor(x => x.MarkValueId)
             <br>
             <div class="form-group">
-                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -38,5 +38,5 @@
     string hrf = "/Statement/Edit/" + @Model.StatementId;
 }
 <div>
-    <a href="@hrf">Вернуться к ведомости</a>
+    <a href="@hrf">Go back to statements</a>
 </div>

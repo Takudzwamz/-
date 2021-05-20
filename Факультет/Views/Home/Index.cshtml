@@ -3,41 +3,78 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Добро пожаловать</h1>
+    <h1 class="display-4">Welcome to faculty management system</h1>
     @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
+<section id="mu-about-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mu-about-us-area">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="mu-about-us-left">
+                                <!-- Start Title -->
+                                <div class="mu-title">
+                                    <h2>What the system offers</h2>
+                                </div>
+                                <!-- End Title -->
+                                <p>This managgement system manages an education instituion, the system has three types of users, the Admin, Tutor and Students.</p>
+                                <ul>
+                                    <li>The admin has the most privilledges .</li>
+                                    <li>Tutor can manage his/tutored program including grading students according to their respective perfomance and creating periodical  results statements.</li>
+                                    <li>Students can see their respective grades for a given period and will be able download the results in the form of a pdf for varius use cases</li>
+                                    
+                                </ul>
+                                <p>Hope you will get the best out of this regardless what your role is.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="mu-about-us-right">
+                                <a >
+                                    <img src="/Quality-management-systems.jpg" height="300px" width="400px" alt="img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End about us -->
 
 @if (false)
 {
-<div class="container">
-    <form>
-        <div class="form-group">
-            <input type="hidden" id="AutoSearchValue">
-            <label class="seachInline" for="AutoSearch">
-                Поиск1:
-            </label>
-            <input type="search" id="AutoSearch" class="form-control" placeholder="Введите более 2 букв для поиска">
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <input type="hidden" id="AutoSearchValue">
+                <label class="seachInline" for="AutoSearch">
+                    Поиск1:
+                </label>
+                <input type="search" id="AutoSearch" class="form-control" placeholder="Введите более 2 букв для поиска">
 
-        </div>
-    </form>
-</div>
-<div class="container">
-    <form>
-        <div class="form-group">
-            <input type="hidden" id="AutoSearchValue1">
-            <label class="seachInline" for="AutoSearch1">
-                Поиск1:
-            </label>
-            <input type="search" id="AutoSearch1" class="form-control" placeholder="Введите более 2 букв для поиска !!!">
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <input type="hidden" id="AutoSearchValue1">
+                <label class="seachInline" for="AutoSearch1">
+                    Поиск1:
+                </label>
+                <input type="search" id="AutoSearch1" class="form-control" placeholder="Введите более 2 букв для поиска !!!">
 
-        </div>
-    </form>
-</div>
+            </div>
+        </form>
+    </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        versh.InitAutocomplete("#AutoSearch", "#AutoSearchValue", "/Autocomplete/AutocompleteData", "Student");
-        versh.InitAutocomplete("#AutoSearch1", "#AutoSearchValue1", "/Autocomplete/AutocompleteData", "Emploee");
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            versh.InitAutocomplete("#AutoSearch", "#AutoSearchValue", "/Autocomplete/AutocompleteData", "Student");
+            versh.InitAutocomplete("#AutoSearch1", "#AutoSearchValue1", "/Autocomplete/AutocompleteData", "Emploee");
+        });
+    </script>
 }

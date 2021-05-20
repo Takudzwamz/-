@@ -17,13 +17,13 @@
             }
 
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Добрый день,<b> @User.Identity.Name!</b> Ваша роль <b>@CurrentUserRole</b> </a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hi,<b> @User.Identity.Name!</b> Your role <b>@CurrentUserRole</b> </a>
                 @*<a class="nav-link text-dark bg-light" asp-area="Identity"  title="Manage">Добрый день, <b>@User.Identity.Name</b> !</a>*@
 
             </li>
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link text-dark bg-light" style="margin-left:10px">Выйти</button>
+                    <button type="submit" class="nav-link btn btn-link text-dark bg-light" style="margin-left:10px">Logout</button>
                 </form>
             </li>
 
@@ -37,7 +37,7 @@
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-dark bg-light" style="margin-left:10px" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+                <a class="nav-link text-dark bg-light" style="margin-left:10px" asp-area="Identity" asp-page="/Account/Login">Login</a>
             </li>
         }
     </ul>

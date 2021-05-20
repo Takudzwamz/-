@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ФАКУЛЬТЕТ</title>
+    <title>@ViewData["Title"] - Faculty</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     @*<link rel="stylesheet" href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css />*@
@@ -40,7 +40,7 @@
                 <nav class="navbar navbar-light bg-light">
                     <a class="navbar-brand" style="width:200px" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="/icons8-student-center-30.png" width="30" height="30" alt="">
-                        Факультет
+                        Faculty
                     </a>
                 </nav>
 
@@ -61,19 +61,19 @@
 
                             <ul class="nav navbar-nav flex-grow-1">
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle nav-link text-dark bg-light" style="margin-left:10px" data-toggle="dropdown" aria-expanded="false" href="#"> Справочники <span class="caret"></span></a>
+                                    <a class="dropdown-toggle nav-link text-dark bg-light" style="margin-left:10px" data-toggle="dropdown" aria-expanded="false" href="#"> Menu <span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         @if (User?.IsInRole(BuiltinRoles.Administrator) ?? false)
                                         {
-                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Employee">Преподаватели</a></li>
-                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Cathedra">Кафедры</a></li>
-                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Subject">Предметы</a></li>
-                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Group">Группы</a></li>
-                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Student">Студенты</a></li>
+                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Employee">Tutors</a></li>
+                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Cathedra">Departments</a></li>
+                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Subject">Courses</a></li>
+                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Group">Groups</a></li>
+                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Student">Students</a></li>
                                         }
                                         @if (User?.IsInRole(BuiltinRoles.Employee) ?? false)
                                         {
-                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Statement">Ведомости</a></li>
+                                            <li><a class="nav-link text-dark" asp-action="Index" asp-controller="Statement">Statements</a></li>
                                         }
                                     </ul>
                                 </li>
@@ -83,7 +83,7 @@
                         {
 
                             <nav class="navbar navbar-light bg-light" style="margin-left:10px">
-                                <a class="nav-link text-dark" target="_blank" asp-action="ViewAsPDF" asp-controller="Performance">Успеваемость</a>
+                                <a class="nav-link text-dark" target="_blank" asp-action="ViewAsPDF" asp-controller="Performance">Perfomance</a>
                             </nav>
                         }
                     }
@@ -99,7 +99,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Факультет - <a asp-area="" asp-controller="Home" asp-action="Privacy">Политика конфиденциальности</a>
+            &copy; 2021 - Faculty - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
         </div>
     </footer>
 </body>

@@ -14,7 +14,7 @@
     var ScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.Statement.GetType(), "Name")?.DisplayValue ?? true;
 }
 
-<h1>Ведомость</h1>
+<h1>Statements</h1>
 <hr />
 <div id="disabled-block">
     @*<partial name="Edit" model='Model.Statement' />*@
@@ -22,7 +22,7 @@
 
 </div>
 <div>
-    <a asp-action="Index">Вернуться к списку ведомостей</a>
+    <a asp-action="Index">Go back to statements list</a>
 </div>
 <hr />
 @*<div class="row">

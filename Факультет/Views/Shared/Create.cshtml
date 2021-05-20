@@ -7,7 +7,7 @@
 @using System.ComponentModel.DataAnnotations
 @using System.ComponentModel
 @{
-    ViewData["Title"] = "Новая запись";
+    ViewData["Title"] = "New entry";
     //Type t = Model.GetType();
     //ModelMetadata mm = ViewData.CollectionModelMetadata(t);
     //var ta = ((DefaultModelMetadata)mm).Attributes.TypeAttributes;
@@ -23,7 +23,7 @@
     var ToScaffoldName = Html.GetPropertyAttribute<HiddenInputAttribute>(Model.GetType(), "Name")?.DisplayValue ?? true;
 }
 
-<h1>Новая запись</h1>
+<h1>New entry</h1>
 
 <h4>@Description</h4>
 <hr />
@@ -51,7 +51,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Вернуться к списку</a>
+    <a asp-action="Index">Go back to list</a>
 </div>
 @*при создании новой ведомости преподаватель фиксирован*@
 @if (Model.GetType() == typeof(Faculty.Models.Statement)) 
